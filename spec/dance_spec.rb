@@ -17,3 +17,29 @@ describe Dance do
     expect(dummy_class.take_a_bow).to eq("Thank you, thank you. It was a pleasure to dance for you all.")
   end
 end
+
+require_relative '../lib/dancer'
+require_relative '../lib/meta_dancing_module'
+
+describe Dancer do
+  let(:dancer) { Dancer.new }
+
+  describe 'class methods' do
+    it 'extends the MetaDancing module' do
+      expect(Dancer.singleton_class.included_modules).to include(MetaDancing)
+    end
+
+    it 'has a metadata method' do
+      expect(Dancer.metadata).to eq("This class produces objects that love to dance.")
+    end
+  end
+
+  describe 'instance methods' do
+    it 'includes the Dance module' do
+      expect(dancer).to respond_to(:twirl)
+      expect(dancer).to respond_to(:jump)
+      expect(dancer).to respond_to(:pirouette)
+      expect(dancer).to respond_to(:take_a_bow)
+    end
+  end
+end
